@@ -1,78 +1,31 @@
 import React, { Component } from "react";
-/*
-  A bare bone react application 
-*/
-// class App extends Component {
-//   render() {
-//     return (
-//       <div className="App">
-//         <p>FRAP applications are fun and powerful</p>
-//       </div>
-//     );
-//   }
-// }
 
-/*
-  Components in React application
-*/
-// class Thing1 extends Component {
-//   render() {
-//     return (
-//       <div className="Thing1">
-//         <h2>Stuff here</h2>
-//       </div>
-//     );
-//   }
-// }
+class Collatz extends Component {
+  constructor(props) {
+    super(props);
 
-// class Thing2 extends Component {
-//   render() {
-//     return (
-//       <div className="Thing2">
-//         <p>
-//           <strong>More stuff here</strong>
-//         </p>
-//       </div>
-//     );
-//   }
-// }
+    let x = this.props.number;
+    let outputString = x.toString();
 
-// class App extends Component {
-//   render() {
-//     return (
-//       <div className="App">
-//         <p>FRAP applications are fun and powerful</p>
-//         <Thing1 />
-//         <Thing2 />
-//         <Thing2 />
-//       </div>
-//     );
-//   }
-// }
-
-/*
-  Data in components example
-*/
-class Thing1 extends Component {
-  render() {
-    const { title, children } = this.props;
-    return (
-      <div className="Thing1">
-        <h2>{title}</h2>
-        {children}
-      </div>
-    );
+    while (typeof x === "number" && x !== 1) {
+      if (x % 2 === 1) {
+        x = 3 * x + 1;
+      } else {
+        x = x / 2;
+      }
+      outputString += " " + x;
+    }
+    this.outputString = outputString;
   }
-}
 
-class Thing2 extends Component {
   render() {
-    const { gratitude } = this.props;
+    const { number } = this.props;
+    const outputString = this.outputString;
+
     return (
-      <div className="Thing2">
-        <p>
-          I am grateful for <strong>{gratitude}</strong>
-        </p>
+      <div className="Collatz">
+        <h2>Collatz Sequence for {number}</h2>
+        <p>{outputString}</p>
       </div>
     );
   }
@@ -80,12 +33,19 @@ class Thing2 extends Component {
 
 class App extends Component {
   render() {
+    const number = 20;
+    const wikilink = "https://en.wikipedia.org/wiki/Collatz_conjecture";
     return (
       <div className="App">
-        <p>FRAP applications are fun and powerul</p>
-        <Thing1 title="Grateful">Today...</Thing1>
-        <Thing2 gratitude="hot coffee" />
-        <Thing2 gratitude="bug-free code" />
+        <h1>Collatz Conjecture</h1>
+        <p>
+          The <a href={wikilink}>Collatz Conjecture</a>&nbsp; states that for
+          any positive integer, <i>x</i>, repeatedly applying <i>3x + 1</i> if
+          odd and <i>x/2</i> if even will eventually lead to 1.
+        </p>
+        <p>No one knows if this is true.</p>
+
+        <Collatz number={number} />
       </div>
     );
   }
