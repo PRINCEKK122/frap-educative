@@ -3,7 +3,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
 # the triple slashes below indicates that the file is relative, while absolute ones uses four forward slashes
-connection_string = "sqlite:///database.db"
+connection_string = "postgresql://princekk122:Remote_2023@localhost:5432/books"
 
 db = create_engine(connection_string)  # this line is for connecting to the database
 base = declarative_base()
@@ -48,3 +48,4 @@ for book in session.query(Book):
 session.delete(book1)
 session.commit()
 
+print(session.query(Book.id, Book.title).filter(Book.id != 1).all()[0].title)
